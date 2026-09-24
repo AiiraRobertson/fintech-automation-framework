@@ -114,6 +114,27 @@ test('User can see account details', async ({ page, loginPage }) => {
 
 });
 
+test('User can see transaction table', async ({ page, loginPage }) => {
+
+    await loginPage.login(
+        validUser.username,
+        validUser.password
+    );
+
+    const firstAccount23667 = page.getByRole('link', { name: '23667' });
+
+    await firstAccount23667.click();
+
+    await expect(
+        page.getByRole('heading', { name: 'Account Details' })
+    ).toBeVisible();
+
+    const transactionTable = page.getByRole('columnheader', { name: 'Transaction' });
+
+    await expect(transactionTable).toBeVisible();
+
+});
+
 test('Transfer button has correct attributes', async ({ page, loginPage }) => {
 
     await loginPage.login(
