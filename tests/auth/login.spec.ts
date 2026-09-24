@@ -18,8 +18,7 @@ test('user can login', async ({ page, loginPage }) => {
     await loginPage.clickLogin();
 
     await expect(
-        page.getByRole('heading', { name: 'Account Services' })
-    ).toBeVisible();
+        page.getByRole('heading', { name: 'Account Services' })).toBeVisible();
 });
 
 test('user cannot login with invalid credentials', async ({ page, loginPage }) => {
@@ -98,19 +97,21 @@ test('Login button is Enabled when username and password is filled', async ({ pa
     await expect(loginPage.loginButton).toBeEnabled();
 });
 
-test('user can check and uncheck the save recipient checkbox', async ({ page, }) => {
+test('User can see account details', async ({ page, loginPage }) => {
 
-    const saveThisRecipient = page.locator('input[name="saveRecipient"]');
-    
-    await expect(saveThisRecipient).not.toBeChecked();
-    
-    await saveThisRecipient.check();
-    
-    await expect(saveThisRecipient).toBeChecked();
-    
-    await saveThisRecipient.uncheck();
-    
-    await expect(saveThisRecipient).not.toBeChecked();
+    await loginPage.login(
+        validUser.username,
+        validUser.password
+    );
+
+    const firstAccount23667 = page.getByRole('link', { name: '23667' });
+
+    await firstAccount23667.click();
+
+    await expect(
+        page.getByRole('heading', { name: 'Account Details' })
+    ).toBeVisible();
+
 });
 
 test('Transfer button has correct attributes', async ({ page, loginPage }) => {
